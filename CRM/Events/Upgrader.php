@@ -33,7 +33,7 @@ class CRM_Events_Upgrader extends CRM_Events_Upgrader_Base {
     $customData->syncOptionGroup(E::path('resources/option_group_remote_registration_profiles.json'));
 
     // custom groups
-    $customData->syncCustomGroup(E::path('resources/custom_contact_ekir.json'));
-    $customData->syncCustomGroup(E::path('resources/custom_participant_presbytertag.json'));
+    $customData->syncCustomGroup(E::path('resources/custom_group_contact_ekir.json'));
+    $customData->syncCustomGroup(E::path('resources/custom_group_participant_presbytertag.json'));
   }
 }
