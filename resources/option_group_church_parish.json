@@ -1,0 +1,20 @@
+{
+  "_lookup": ["name"],
+  "_translate": ["title"],
+  "name": "church_parish",
+  "title": "Kirchengemeinde",
+  "is_reserved": "1",
+  "is_active": "1",
+  "_values": [
+    {
+      "_lookup": ["name"],
+      "_translate": ["label", "description"],
+      "name": "example",
+      "label": "Beispielgemeinde",
+      "description": "",
+      "filter": "99",
+      "is_reserved": "0",
+      "is_active": "0"
+    }
+  ]
+}

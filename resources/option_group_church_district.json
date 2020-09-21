@@ -1,0 +1,20 @@
+{
+  "_lookup": ["name"],
+  "_translate": ["title"],
+  "name": "church_district",
+  "title": "Kirchenkreis",
+  "is_reserved": "1",
+  "is_active": "1",
+  "_values": [
+    {
+      "_lookup": ["name"],
+      "_translate": ["label", "description"],
+      "name": "example",
+      "label": "Beispielkreis",
+      "description": "",
+      "filter": "0",
+      "is_reserved": "0",
+      "is_active": "0"
+    }
+  ]
+}
