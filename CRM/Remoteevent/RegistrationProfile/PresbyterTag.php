@@ -77,6 +77,18 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'group_name'  => 'contact_base',
                 'group_label' => $l10n->localise("Stammdaten"),
             ],
+            'age_range'    => [
+                'name'        => 'age_range',
+                'type'        => 'Select',
+                'validation'  => '',
+                'weight'      => 70,
+                'required'    => 1,
+                'options'     => $this->getOptions('age_range', $locale),
+                'label'       => $l10n->localise('Altersgruppe'),
+                'description' => $l10n->localise("Alterskohorte des Teilnehmers"),
+                'group_name'  => 'contact_base',
+                'group_label' => $l10n->localise("Stammdaten"),
+            ],
             'email' => [
                 'name'        => 'email',
                 'type'        => 'Text',

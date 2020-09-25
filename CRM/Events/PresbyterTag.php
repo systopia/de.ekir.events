@@ -68,6 +68,19 @@ class CRM_Events_PresbyterTag
         if (self::isPresbyterTag($registration->getEvent())) {
             // todo: if we want to pass registration fields also to XCM (like Kirchenkreis/Kirchengemeinde)
             //  we can map them here to the respective contact fields so they can be passed to XCM
+
+            // map registration fields to custom fields
+            $contact_data = &$registration->getContactData();
+            $submission = $registration->getSubmission();
+            $mapping = [
+                'church_district' => 'contact_ekir.ekir_church_district',
+                'church_parish'   => 'contact_ekir.ekir_church_parish',
+            ];
+            foreach ($mapping as $registration_field => $contact_custom_field) {
+                if (isset($submission[$registration_field])) {
+                    $contact_data[$contact_custom_field] = $submission[$registration_field];
+                }
+            }
         }
     }
 
@@ -82,8 +95,7 @@ class CRM_Events_PresbyterTag
         if (!$registration->hasErrors() && self::isPresbyterTag($registration->getEvent())) {
             // map registration fields to custom fields
             $mapping = [
-                'church_district' => 'participant_presbytertag.event_presbyter_church_district',
-                'church_parish'   => 'participant_presbytertag.event_presbyter_church_parish',
+                'age_range'       => 'participant_presbytertag.event_presbyter_age_range',
                 'sm_instagram'    => 'participant_presbytertag.event_presbyter_comm_instagram',
                 'sm_twitter'      => 'participant_presbytertag.event_presbyter_comm_twitter',
                 'sm_facebook'     => 'participant_presbytertag.event_presbyter_comm_facebook',
