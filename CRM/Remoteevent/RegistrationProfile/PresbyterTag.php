@@ -126,8 +126,8 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             ],
             'presbyter_since' => [
                 'name'        => 'presbyter_since',
-                'type'        => 'Text',
-                'validation'  => 'Integer',
+                'type'        => 'Date',
+                'validation'  => 'Date',
                 'weight'      => 70,
                 'required'    => 1,
                 'label'       => $l10n->localise('Presbyter seit'),

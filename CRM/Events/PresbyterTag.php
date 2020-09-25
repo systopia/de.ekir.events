@@ -75,6 +75,7 @@ class CRM_Events_PresbyterTag
             $mapping = [
                 'church_district' => 'contact_ekir.ekir_church_district',
                 'church_parish'   => 'contact_ekir.ekir_church_parish',
+                'presbyter_since' => 'contact_ekir.ekir_presbyter_since',
             ];
             foreach ($mapping as $registration_field => $contact_custom_field) {
                 if (isset($submission[$registration_field])) {
