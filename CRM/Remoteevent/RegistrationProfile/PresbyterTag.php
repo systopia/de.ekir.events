@@ -14,6 +14,7 @@
 +--------------------------------------------------------*/
 
 use CRM_Events_ExtensionUtil as E;
+use \Civi\RemoteEvent\Event\GetRegistrationFormResultsEvent as GetRegistrationFormResultsEvent;
 
 
 /**
@@ -169,5 +170,34 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'group_label' => $l10n->localise("Social Media"),
             ],
         ];
+    }
+
+    /**
+     * Add the default values to the form data, so people using this profile
+     *  don't have to enter everything themselves
+     *
+     * @param GetRegistrationFormResultsEvent $resultsEvent
+     *   the locale to use, defaults to null none. Use 'default' for current
+     *
+     */
+    public function addDefaultValues(GetRegistrationFormResultsEvent $resultsEvent)
+    {
+        if ($resultsEvent->getContactID()) {
+            // get contact field list from that
+            $data_mapping = [
+                'first_name'      => 'first_name',
+                'last_name'       => 'last_name',
+                'gender_id'       => 'gender_id',
+                'email'           => 'email',
+                'church_district' => 'contact_ekir.ekir_church_district',
+                'church_parish'   => 'contact_ekir.ekir_church_parish',
+                'presbyter_since' => 'contact_ekir.ekir_presbyter_since',
+            ];
+            $field_list = array_flip($data_mapping);
+            CRM_Events_CustomData::resolveCustomFields($field_list);
+
+            // adn then use the generic function
+            $this->addDefaultContactValues($resultsEvent, array_keys($field_list), $field_list);
+        }
     }
 }
