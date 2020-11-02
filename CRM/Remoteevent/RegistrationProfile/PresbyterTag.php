@@ -14,8 +14,8 @@
 +--------------------------------------------------------*/
 
 use CRM_Events_ExtensionUtil as E;
-use \Civi\RemoteEvent\Event\GetRegistrationFormResultsEvent as GetRegistrationFormResultsEvent;
-
+use \Civi\RemoteParticipant\Event\ValidateEvent as ValidateEvent;
+use Civi\RemoteParticipant\Event\GetCreateParticipantFormEvent as GetCreateParticipantFormEvent;
 
 /**
  * Implements profile 'Presbytertag'
@@ -176,11 +176,11 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
      * Add the default values to the form data, so people using this profile
      *  don't have to enter everything themselves
      *
-     * @param GetRegistrationFormResultsEvent $resultsEvent
+     * @param GetCreateParticipantFormEvent $resultsEvent
      *   the locale to use, defaults to null none. Use 'default' for current
      *
      */
-    public function addDefaultValues(GetRegistrationFormResultsEvent $resultsEvent)
+    public function addDefaultValues(GetCreateParticipantFormEvent $resultsEvent)
     {
         if ($resultsEvent->getContactID()) {
             // get contact field list from that
@@ -200,4 +200,21 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             $this->addDefaultContactValues($resultsEvent, array_keys($field_list), $field_list);
         }
     }
+
+    /**
+     * Validate the profile fields individually.
+     * This only validates the mere data types,
+     *   more complex validation (e.g. over multiple fields)
+     *   have to be performed by the profile implementations
+     *
+     * @param ValidateEvent $validationEvent
+     *      event triggered by the RemoteParticipant.validate or submit API call
+     */
+    public function validateSubmission($validationEvent)
+    {
+        parent::validateSubmission($validationEvent);
+
+        // TODO: anything else??
+    }
+
 }
