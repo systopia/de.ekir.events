@@ -174,7 +174,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
         // add GTAC if set
         $presbyter_tag_gtac = Civi::settings()->get('presbyter_gtac');
         if (!empty($presbyter_tag_gtac)) {
-            $fields[''] = [
+            $fields['presbyter_gtac'] = [
                 'name' => 'presbyter_gtac',
                 'type' => 'Checkbox',
                 'validation' => '',
