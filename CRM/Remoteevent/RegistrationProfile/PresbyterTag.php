@@ -182,7 +182,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required' => 1,
                 'label' => $l10n->localise("Ich akzeptiere die folgenden Nutzungsbedingungen"),
                 'description' => $l10n->localise("Die Zusatzvereinbarung muss akzeptiert werden."),
-                'group_name' => 'gtac',
+                'group_name' => 'gtacs',
                 'group_label' => $l10n->localise("Terms and Conditions"),
                 'prefix' => '',
                 'suffix' => $presbyter_tag_gtac,
