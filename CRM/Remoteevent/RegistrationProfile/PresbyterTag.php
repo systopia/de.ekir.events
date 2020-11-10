@@ -43,7 +43,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
     public function getFields($locale = null)
     {
         $l10n = CRM_Remoteevent_Localisation::getLocalisation($locale);
-        return [
+        $fields = [
             'first_name'   => [
                 'name'        => 'first_name',
                 'type'        => 'Text',
@@ -170,6 +170,28 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'group_label' => $l10n->localise("Social Media"),
             ],
         ];
+
+        // add GTAC if set
+        $presbyter_tag_gtac = Civi::settings()->get('presbyter_gtac');
+        if (!empty($presbyter_tag_gtac)) {
+            $fields[''] = [
+                'name' => 'presbyter_gtac',
+                'type' => 'Checkbox',
+                'validation' => '',
+                'weight' => 110,
+                'required' => 1,
+                'label' => $l10n->localise("Ich akzeptiere die folgenden Nutzungsbedingungen"),
+                'description' => $l10n->localise("Die Zusatzvereinbarung muss akzeptiert werden."),
+                'group_name' => 'gtac',
+                'group_label' => $l10n->localise("Terms and Conditions"),
+                'prefix' => '',
+                'suffix' => $presbyter_tag_gtac,
+                'prefix_display' => '',
+                'suffix_display' => 'inline'
+            ];
+        }
+
+        return $fields;
     }
 
     /**

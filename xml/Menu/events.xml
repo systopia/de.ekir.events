@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/admin/ekir/events</path>
+    <page_callback>CRM_Events_Form_Settings</page_callback>
+    <title>EKIR Veranstaltungen - Zusatzeinstellungen</title>
+    <desc></desc>
+    <access_arguments>access CiviCRM</access_arguments>
+    <adminGroup>CiviEvent</adminGroup>
+  </item>
+</menu>
