@@ -82,6 +82,22 @@ class CRM_Events_PresbyterTag
                     $contact_data[$contact_custom_field] = $submission[$registration_field];
                 }
             }
+
+            // also: derive prefix_id from gender_id
+            if (!empty($contact_data['gender_id']) && empty($contact_data['prefix_id'])) {
+                switch ($contact_data['gender_id']) {
+                    case 1: // female
+                        $contact_data['prefix_id'] = 5; // Frau
+                        break;
+
+                    case 2: // male
+                        $contact_data['prefix_id'] = 6; // Herr
+                        break;
+
+                    default:
+                        // unknown gender, nothing to do
+                }
+            }
         }
     }
 
