@@ -187,7 +187,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'prefix' => '',
                 'suffix' => $presbyter_tag_gtac,
                 'prefix_display' => '',
-                'suffix_display' => 'inline'
+                'suffix_display' => 'dialog'
             ];
         }
 

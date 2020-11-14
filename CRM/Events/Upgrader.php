@@ -26,7 +26,7 @@ class CRM_Events_Upgrader extends CRM_Events_Upgrader_Base
      */
     public function install()
     {
-        $customData = new CRM_Remoteevent_CustomData(E::LONG_NAME);
+        $customData = new CRM_Events_CustomData(E::LONG_NAME);
 
         // option groups
         $customData->syncOptionGroup(E::path('resources/option_group_age_range.json'));
