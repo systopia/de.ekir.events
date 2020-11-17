@@ -44,6 +44,13 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
     {
         $l10n = CRM_Remoteevent_Localisation::getLocalisation($locale);
         $fields = [
+            'contact_base' => [
+                'type'        => 'fieldset',
+                'name'        => 'contact_base',
+                'label'       => $l10n->localise("Stammdaten"),
+                'weight'      => 10,
+                'description' => '',
+            ],
             'first_name'   => [
                 'name'        => 'first_name',
                 'type'        => 'Text',
@@ -52,8 +59,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('Vorname'),
                 'description' => $l10n->localise("Vorname des Teilnehmers"),
-                'group_name'  => 'contact_base',
-                'group_label' => $l10n->localise("Stammdaten"),
+                'parent'      => 'contact_data'
             ],
             'last_name'    => [
                 'name'        => 'last_name',
@@ -63,8 +69,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('Nachname'),
                 'description' => $l10n->localise("Nachname des Teilnehmers"),
-                'group_name'  => 'contact_base',
-                'group_label' => $l10n->localise("Stammdaten"),
+                'parent'      => 'contact_data'
             ],
             'gender_id'    => [
                 'name'        => 'gender_id',
@@ -75,8 +80,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('gender', $locale),
                 'label'       => $l10n->localise('Geschlecht'),
                 'description' => $l10n->localise("Geschlecht des Teilnehmers"),
-                'group_name'  => 'contact_base',
-                'group_label' => $l10n->localise("Stammdaten"),
+                'parent'      => 'contact_data'
             ],
             'age_range'    => [
                 'name'        => 'age_range',
@@ -87,8 +91,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('age_range', $locale),
                 'label'       => $l10n->localise('Altersgruppe'),
                 'description' => $l10n->localise("Alterskohorte des Teilnehmers"),
-                'group_name'  => 'contact_base',
-                'group_label' => $l10n->localise("Stammdaten"),
+                'parent'      => 'contact_data'
             ],
             'email' => [
                 'name'        => 'email',
@@ -98,8 +101,15 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('E-Mail'),
                 'description' => $l10n->localise("E-Mail Adresse"),
-                'group_name'  => 'contact_base',
-                'group_label' => $l10n->localise("Stammdaten"),
+                'parent'      => 'contact_data'
+            ],
+
+            'ekir_data' => [
+                'type'        => 'fieldset',
+                'name'        => 'ekir_data',
+                'label'       => $l10n->localise("Erweiterte Daten"),
+                'weight'      => 20,
+                'description' => '',
             ],
             'church_district' => [
                 'name'        => 'church_district',
@@ -110,8 +120,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('church_district', $locale),
                 'label'       => $l10n->localise('Kirchenkreis'),
                 'description' => $l10n->localise("Zu welchem Kirchenkreis gehören Sie?"),
-                'group_name'  => 'ekir_data',
-                'group_label' => $l10n->localise("EKIR Daten"),
+                'parent'      => 'ekir_data',
             ],
             'church_parish' => [
                 'name'        => 'church_parish',
@@ -122,8 +131,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('church_parish', $locale),
                 'label'       => $l10n->localise('Kirchengemeinde'),
                 'description' => $l10n->localise("Zu welcher Kirchengemeinde gehören Sie?"),
-                'group_name'  => 'ekir_data',
-                'group_label' => $l10n->localise("EKIR Daten"),
+                'parent'      => 'ekir_data',
             ],
             'presbyter_since' => [
                 'name'        => 'presbyter_since',
@@ -133,8 +141,15 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('Presbyter seit'),
                 'description' => $l10n->localise("Seit wann sind Sie im Presbyterium?"),
-                'group_name'  => 'ekir_data',
-                'group_label' => $l10n->localise("EKIR Daten"),
+                'parent'      => 'ekir_data',
+            ],
+
+            'social_media' => [
+                'type'        => 'fieldset',
+                'name'        => 'ekir_data',
+                'label'       => $l10n->localise("Social Media"),
+                'weight'      => 30,
+                'description' => '',
             ],
             'sm_instagram' => [
                 'name'        => 'sm_instagram',
@@ -144,8 +159,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 0,
                 'label'       => $l10n->localise('Instagram Account'),
                 'description' => $l10n->localise(""),
-                'group_name'  => 'social_media',
-                'group_label' => $l10n->localise("Social Media"),
+                'parent'      => 'social_media'
             ],
             'sm_twitter' => [
                 'name'        => 'sm_twitter',
@@ -155,8 +169,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 0,
                 'label'       => $l10n->localise('Twitter Account'),
                 'description' => $l10n->localise(""),
-                'group_name'  => 'social_media',
-                'group_label' => $l10n->localise("Social Media"),
+                'parent'      => 'social_media'
             ],
             'sm_facebook' => [
                 'name'        => 'sm_facebook',
@@ -166,8 +179,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 0,
                 'label'       => $l10n->localise('Facebook Account'),
                 'description' => $l10n->localise(""),
-                'group_name'  => 'social_media',
-                'group_label' => $l10n->localise("Social Media"),
+                'parent'      => 'social_media'
             ],
         ];
 
@@ -182,12 +194,10 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required' => 1,
                 'label' => $l10n->localise("Ich akzeptiere die folgenden Nutzungsbedingungen"),
                 'description' => $l10n->localise("Die Zusatzvereinbarung muss akzeptiert werden."),
-                'group_name' => 'gtacs',
-                'group_label' => $l10n->localise("Terms and Conditions"),
-                'prefix' => '',
+                'parent' => 'gtacs',
                 'suffix' => $presbyter_tag_gtac,
-                'prefix_display' => '',
-                'suffix_display' => 'dialog'
+                'suffix_display' => 'dialog',
+                'suffix_display_label' => $l10n->localise("Details"),
             ];
         }
 
