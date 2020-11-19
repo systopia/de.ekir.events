@@ -154,7 +154,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'sm_instagram' => [
                 'name'        => 'sm_instagram',
                 'type'        => 'Text',
-                'validation'  => 'regex:/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/igm',
+                //'validation'  => 'regex:/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/igm',
                 'weight'      => 110,
                 'required'    => 0,
                 'label'       => $l10n->localise('Instagram Account'),
@@ -164,7 +164,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'sm_twitter' => [
                 'name'        => 'sm_twitter',
                 'type'        => 'Text',
-                'validation'  => 'regex:/^@?(\w){1,15}$/',
+                //'validation'  => 'regex:/^@?(\w){1,15}$/',
                 'weight'      => 110,
                 'required'    => 0,
                 'label'       => $l10n->localise('Twitter Account'),
@@ -174,7 +174,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'sm_facebook' => [
                 'name'        => 'sm_facebook',
                 'type'        => 'Text',
-                'validation'  => 'regex:/^[a-z\d.]{5,}$/i',
+                //'validation'  => 'regex:/^[a-z\d.]{5,}$/i',
                 'weight'      => 130,
                 'required'    => 0,
                 'label'       => $l10n->localise('Facebook Account'),
