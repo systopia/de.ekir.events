@@ -59,7 +59,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('Vorname'),
                 'description' => $l10n->localise("Vorname des Teilnehmers"),
-                'parent'      => 'contact_data'
+                'parent'      => 'contact_base'
             ],
             'last_name'    => [
                 'name'        => 'last_name',
@@ -69,7 +69,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('Nachname'),
                 'description' => $l10n->localise("Nachname des Teilnehmers"),
-                'parent'      => 'contact_data'
+                'parent'      => 'contact_base'
             ],
             'gender_id'    => [
                 'name'        => 'gender_id',
@@ -80,7 +80,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('gender', $locale),
                 'label'       => $l10n->localise('Geschlecht'),
                 'description' => $l10n->localise("Geschlecht des Teilnehmers"),
-                'parent'      => 'contact_data'
+                'parent'      => 'contact_base'
             ],
             'age_range'    => [
                 'name'        => 'age_range',
@@ -91,7 +91,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'options'     => $this->getOptions('age_range', $locale),
                 'label'       => $l10n->localise('Altersgruppe'),
                 'description' => $l10n->localise("Alterskohorte des Teilnehmers"),
-                'parent'      => 'contact_data'
+                'parent'      => 'contact_base'
             ],
             'email' => [
                 'name'        => 'email',
@@ -101,7 +101,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'label'       => $l10n->localise('E-Mail'),
                 'description' => $l10n->localise("E-Mail Adresse"),
-                'parent'      => 'contact_data'
+                'parent'      => 'contact_base'
             ],
 
             'ekir_data' => [
@@ -146,7 +146,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
 
             'social_media' => [
                 'type'        => 'fieldset',
-                'name'        => 'ekir_data',
+                'name'        => 'social_media',
                 'label'       => $l10n->localise("Social Media"),
                 'weight'      => 30,
                 'description' => '',
@@ -183,23 +183,23 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             ],
         ];
 
-        // add GTAC if set
-        $presbyter_tag_gtac = Civi::settings()->get('presbyter_gtac');
-        if (!empty($presbyter_tag_gtac)) {
-            $fields['presbyter_gtac'] = [
-                'name' => 'presbyter_gtac',
-                'type' => 'Checkbox',
-                'validation' => '',
-                'weight' => 110,
-                'required' => 1,
-                'label' => $l10n->localise("Ich akzeptiere die folgenden Nutzungsbedingungen"),
-                'description' => $l10n->localise("Die Zusatzvereinbarung muss akzeptiert werden."),
-                'parent' => 'gtacs',
-                'suffix' => $presbyter_tag_gtac,
-                'suffix_display' => 'dialog',
-                'suffix_display_label' => $l10n->localise("Details"),
-            ];
-        }
+//        // add GTAC if set
+//        $presbyter_tag_gtac = Civi::settings()->get('presbyter_gtac');
+//        if (!empty($presbyter_tag_gtac)) {
+//            $fields['presbyter_gtac'] = [
+//                'name' => 'presbyter_gtac',
+//                'type' => 'Checkbox',
+//                'validation' => '',
+//                'weight' => 110,
+//                'required' => 1,
+//                'label' => $l10n->localise("Ich akzeptiere die folgenden Nutzungsbedingungen"),
+//                'description' => $l10n->localise("Die Zusatzvereinbarung muss akzeptiert werden."),
+//                'parent' => 'gtacs',
+//                'suffix' => $presbyter_tag_gtac,
+//                'suffix_display' => 'dialog',
+//                'suffix_display_label' => $l10n->localise("Details"),
+//            ];
+//        }
 
         return $fields;
     }
