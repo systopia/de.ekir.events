@@ -114,6 +114,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'church_district' => [
                 'name'        => 'church_district',
                 'type'        => 'Select',
+                'empty_label' => $l10n->localise('bitte wählen'),
                 'validation'  => '',
                 'weight'      => 70,
                 'required'    => 1,
@@ -125,6 +126,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'church_parish' => [
                 'name'        => 'church_parish',
                 'type'        => 'Select',
+                'empty_label' => $l10n->localise('bitte wählen'),
                 'validation'  => '',
                 'weight'      => 70,
                 'required'    => 1,
@@ -158,7 +160,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 110,
                 'required'    => 0,
                 'label'       => $l10n->localise('Instagram Account'),
-                'description' => $l10n->localise(""),
+                'description' => '',
                 'parent'      => 'social_media'
             ],
             'sm_twitter' => [
@@ -168,7 +170,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 110,
                 'required'    => 0,
                 'label'       => $l10n->localise('Twitter Account'),
-                'description' => $l10n->localise(""),
+                'description' => '',
                 'parent'      => 'social_media'
             ],
             'sm_facebook' => [
@@ -178,7 +180,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 130,
                 'required'    => 0,
                 'label'       => $l10n->localise('Facebook Account'),
-                'description' => $l10n->localise(""),
+                'description' => '',
                 'parent'      => 'social_media'
             ],
         ];
