@@ -24,18 +24,19 @@ use CRM_Events_ExtensionUtil as E;
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config/
  */
 function events_civicrm_config(&$config) {
-    $dispatcher = Civi::dispatcher();
-    $dispatcher->addListener(
+    _events_civix_civicrm_config($config);
+
+    // register events (with our own wrapper to avoid duplicate registrations)
+    $dispatcher = new \Civi\RemoteDispatcher();
+    $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.submit',
         ['CRM_Events_PresbyterTag', 'mapRegistrationFieldsToContactFields'], CRM_Remoteevent_Registration::BEFORE_CONTACT_IDENTIFICATION);
-    $dispatcher->addListener(
+    $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.submit',
         ['CRM_Events_PresbyterTag', 'adjustParticipantParameters'], CRM_Remoteevent_Registration::BEFORE_PARTICIPANT_CREATION);
-    $dispatcher->addListener(
+    $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.submit',
         ['CRM_Events_PresbyterTag', 'registrationPostProcessing'], CRM_Remoteevent_Registration::STAGE4_COMMUNICATION);
-
-  _events_civix_civicrm_config($config);
 }
 
 /**
