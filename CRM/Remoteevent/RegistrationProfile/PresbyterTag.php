@@ -254,7 +254,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             // the first 6 digits of the parish should match the district
             if ($submission['church_district'] != substr($submission['church_parish'], 0, 6)) {
                 $l10n = $validationEvent->getLocalisation();
-                $validationEvent->addError('church_parish', $l10n->localise("Diese Kirchengemeinde gehört nicht zum gewählten Kirchenkreis."));
+                $validationEvent->addValidationError('church_parish', $l10n->localise("Diese Kirchengemeinde gehört nicht zum gewählten Kirchenkreis."));
             }
         }
     }
