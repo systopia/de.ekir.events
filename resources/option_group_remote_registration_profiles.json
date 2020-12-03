@@ -11,6 +11,16 @@
       "filter": "0",
       "is_reserved": "1",
       "is_active": "1"
+    },
+    {
+      "_lookup": ["name"],
+      "_translate": ["label", "description"],
+      "name": "PresbyterTagUpdate",
+      "label": "Presbyter-Tag Änderung",
+      "description": "Used for changing PresbyterTag registrations",
+      "filter": "0",
+      "is_reserved": "1",
+      "is_active": "1"
     }
   ]
 }
