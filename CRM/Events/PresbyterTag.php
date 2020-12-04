@@ -14,13 +14,32 @@
 +--------------------------------------------------------*/
 
 use CRM_Events_ExtensionUtil as E;
+use  \Civi\RemoteParticipant\Event\ChangingEvent as ChangingEvent;
 use  \Civi\RemoteParticipant\Event\RegistrationEvent as RegistrationEvent;
+use  \Civi\RemoteParticipant\Event\UpdateEvent as UpdateEvent;
 
 /**
  * Implements Logic for the Presbyter Tag
  */
 class CRM_Events_PresbyterTag
 {
+    const CONTACT_MAPPING = [
+        'first_name'      => 'first_name',
+        'last_name'       => 'last_name',
+        'gender_id'       => 'gender_id',
+        'email'           => 'email',
+        'church_district' => 'contact_ekir.ekir_church_district',
+        'church_parish'   => 'contact_ekir.ekir_church_parish',
+        'presbyter_since' => 'contact_ekir.ekir_presbyter_since',
+    ];
+
+    const PARTICIPANT_MAPPING = [
+        'age_range'       => 'participant_presbytertag.event_presbyter_age_range',
+        'sm_instagram'    => 'participant_presbytertag.event_presbyter_comm_instagram',
+        'sm_twitter'      => 'participant_presbytertag.event_presbyter_comm_twitter',
+        'sm_facebook'     => 'participant_presbytertag.event_presbyter_comm_facebook',
+    ];
+
     /**
      * Get the event type ID of the PresbyterTag event type
      *
@@ -60,7 +79,7 @@ class CRM_Events_PresbyterTag
     /**
      * Will identify a contact by its remote ID
      *
-     * @param $registration RegistrationEvent
+     * @param $registration ChangingEvent
      *   registration event
      */
     public static function mapRegistrationFieldsToContactFields($registration)
@@ -70,7 +89,11 @@ class CRM_Events_PresbyterTag
             //  we can map them here to the respective contact fields so they can be passed to XCM
 
             // map registration fields to custom fields
-            $contact_data = &$registration->getContactData();
+            if ($registration instanceof UpdateEvent) {
+                $contact_data = &$registration->getContactUpdates();
+            } else {
+                $contact_data = &$registration->getContactData();
+            }
             $submission = $registration->getSubmission();
             $mapping = [
                 'church_district' => 'contact_ekir.ekir_church_district',
@@ -104,21 +127,19 @@ class CRM_Events_PresbyterTag
     /**
      * Allows us to tweak the data for the participant just before it's being created
      *
-     * @param $registration RegistrationEvent
+     * @param $registration ChangingEvent
      *   registration event
      */
     public static function adjustParticipantParameters($registration)
     {
         if (!$registration->hasErrors() && self::isPresbyterTag($registration->getEvent())) {
             // map registration fields to custom fields
-            $mapping = [
-                'age_range'       => 'participant_presbytertag.event_presbyter_age_range',
-                'sm_instagram'    => 'participant_presbytertag.event_presbyter_comm_instagram',
-                'sm_twitter'      => 'participant_presbytertag.event_presbyter_comm_twitter',
-                'sm_facebook'     => 'participant_presbytertag.event_presbyter_comm_facebook',
-            ];
-            $participant_data = &$registration->getParticipant();
-            foreach ($mapping as $registration_key => $custom_field) {
+            if ($registration instanceof UpdateEvent) {
+                $participant_data = &$registration->getParticipantUpdates();
+            } else {
+                $participant_data = &$registration->getParticipantData();
+            }
+            foreach (self::PARTICIPANT_MAPPING as $registration_key => $custom_field) {
                 $participant_data[$custom_field] = CRM_Utils_Array::value($registration_key, $participant_data, '');
             }
 
@@ -127,9 +148,9 @@ class CRM_Events_PresbyterTag
     }
 
     /**
-     * PostProcessing after the registrx`ation was finished
+     * PostProcessing after the registration was finished
      *
-     * @param $registration RegistrationEvent
+     * @param $registration ChangingEvent
      *   registration event
      */
     public static function registrationPostProcessing($registration)

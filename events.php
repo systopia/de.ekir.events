@@ -14,9 +14,7 @@
 +--------------------------------------------------------*/
 
 require_once 'events.civix.php';
-// phpcs:disable
 use CRM_Events_ExtensionUtil as E;
-// phpcs:enable
 
 /**
  * Implements hook_civicrm_config().
@@ -26,8 +24,8 @@ use CRM_Events_ExtensionUtil as E;
 function events_civicrm_config(&$config) {
     _events_civix_civicrm_config($config);
 
-    // register events (with our own wrapper to avoid duplicate registrations)
-    $dispatcher = new \Civi\RemoteDispatcher();
+    // register for RemoteParticipant.create events
+    $dispatcher = new Civi\RemoteDispatcher();
     $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.submit',
         ['CRM_Events_PresbyterTag', 'mapRegistrationFieldsToContactFields'], CRM_Remoteevent_Registration::BEFORE_CONTACT_IDENTIFICATION);
@@ -37,6 +35,14 @@ function events_civicrm_config(&$config) {
     $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.submit',
         ['CRM_Events_PresbyterTag', 'registrationPostProcessing'], CRM_Remoteevent_Registration::STAGE4_COMMUNICATION);
+
+    // register for RemoteParticipant.update events
+    $dispatcher->addUniqueListener(
+        'civi.remoteevent.registration.update',
+        ['CRM_Events_PresbyterTag', 'mapRegistrationFieldsToContactFields'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_CONTACT_CHANGES);
+    $dispatcher->addUniqueListener(
+        'civi.remoteevent.registration.update',
+        ['CRM_Events_PresbyterTag', 'adjustParticipantParameters'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_PARTICIPANT_CHANGES);
 }
 
 /**

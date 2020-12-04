@@ -47,4 +47,11 @@ class CRM_Events_Upgrader extends CRM_Events_Upgrader_Base
         $customData->syncCustomGroup(E::path('resources/custom_group_contact_ekir.json'));
         return true;
     }
+
+    public function upgrade_0004()
+    {
+        $customData = new CRM_Remoteevent_CustomData(E::LONG_NAME);
+        $customData->syncOptionGroup(E::path('resources/option_group_remote_registration_profiles.json'));
+        return true;
+    }
 }

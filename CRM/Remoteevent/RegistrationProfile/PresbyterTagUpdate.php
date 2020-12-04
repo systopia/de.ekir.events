@@ -14,13 +14,12 @@
 +--------------------------------------------------------*/
 
 use CRM_Events_ExtensionUtil as E;
-use \Civi\RemoteParticipant\Event\ValidateEvent as ValidateEvent;
 use Civi\RemoteParticipant\Event\GetParticipantFormEventBase as GetParticipantFormEventBase;
 
 /**
  * Implements profile 'Presbytertag'
  */
-class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_RegistrationProfile
+class CRM_Remoteevent_RegistrationProfile_PresbyterTagUpdate extends CRM_Remoteevent_RegistrationProfile_PresbyterTag
 {
     /**
      * Get the internal name of the profile represented
@@ -29,7 +28,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
      */
     public function getName()
     {
-        return 'PresbyterTag';
+        return 'PresbyterTagUpdate';
     }
 
     /**
@@ -50,26 +49,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'label'       => $l10n->localise("Stammdaten"),
                 'weight'      => 10,
                 'description' => '',
-            ],
-            'first_name'   => [
-                'name'        => 'first_name',
-                'type'        => 'Text',
-                'validation'  => '',
-                'weight'      => 40,
-                'required'    => 1,
-                'label'       => $l10n->localise('Vorname'),
-                'description' => $l10n->localise("Vorname des Teilnehmers"),
-                'parent'      => 'contact_base'
-            ],
-            'last_name'    => [
-                'name'        => 'last_name',
-                'type'        => 'Text',
-                'validation'  => '',
-                'weight'      => 50,
-                'required'    => 1,
-                'label'       => $l10n->localise('Nachname'),
-                'description' => $l10n->localise("Nachname des Teilnehmers"),
-                'parent'      => 'contact_base'
             ],
             'gender_id'    => [
                 'name'        => 'gender_id',
@@ -93,16 +72,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'description' => $l10n->localise("Alterskohorte des Teilnehmers"),
                 'parent'      => 'contact_base'
             ],
-            'email' => [
-                'name'        => 'email',
-                'type'        => 'Text',
-                'validation'  => 'Email',
-                'weight'      => 90,
-                'required'    => 1,
-                'label'       => $l10n->localise('E-Mail'),
-                'description' => $l10n->localise("E-Mail Adresse"),
-                'parent'      => 'contact_base'
-            ],
 
             'ekir_data' => [
                 'type'        => 'fieldset',
@@ -110,30 +79,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'label'       => $l10n->localise("Erweiterte Daten"),
                 'weight'      => 20,
                 'description' => '',
-            ],
-            'church_district' => [
-                'name'        => 'church_district',
-                'type'        => 'Select',
-                'empty_label' => $l10n->localise('bitte wählen'),
-                'validation'  => '',
-                'weight'      => 70,
-                'required'    => 1,
-                'options'     => $this->getOptions('church_district', $locale),
-                'label'       => $l10n->localise('Kirchenkreis'),
-                'description' => $l10n->localise("Zu welchem Kirchenkreis gehören Sie?"),
-                'parent'      => 'ekir_data',
-            ],
-            'church_parish' => [
-                'name'        => 'church_parish',
-                'type'        => 'Select',
-                'empty_label' => $l10n->localise('bitte wählen'),
-                'validation'  => '',
-                'weight'      => 70,
-                'required'    => 1,
-                'options'     => $this->getOptions('church_parish', $locale),
-                'label'       => $l10n->localise('Kirchengemeinde'),
-                'description' => $l10n->localise("Zu welcher Kirchengemeinde gehören Sie?"),
-                'parent'      => 'ekir_data',
             ],
             'presbyter_since' => [
                 'name'        => 'presbyter_since',
@@ -216,57 +161,29 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
      */
     public function addDefaultValues(GetParticipantFormEventBase $resultsEvent)
     {
+        // add contact default values
         if ($resultsEvent->getContactID()) {
             // get contact field list from that
-            $field_list = array_flip(CRM_Events_PresbyterTag::CONTACT_MAPPING);
+            $data_mapping = [
+                'gender_id'       => 'gender_id',
+                'email'           => 'email',
+                'presbyter_since' => 'contact_ekir.ekir_presbyter_since',
+            ];
+            $field_list = array_flip($data_mapping);
             CRM_Events_CustomData::resolveCustomFields($field_list);
 
             // adn then use the generic function
             $this->addDefaultContactValues($resultsEvent, array_keys($field_list), $field_list);
         }
-    }
 
-    /**
-     * Validate the profile fields individually.
-     * This only validates the mere data types,
-     *   more complex validation (e.g. over multiple fields)
-     *   have to be performed by the profile implementations
-     *
-     * @param ValidateEvent $validationEvent
-     *      event triggered by the RemoteParticipant.validate or submit API call
-     */
-    public function validateSubmission($validationEvent)
-    {
-        parent::validateSubmission($validationEvent);
-
-        // validate that the parish matches the district
-        $submission = $validationEvent->getSubmission();
-        if (!empty($submission['church_parish']) && !empty($submission['church_district'])) {
-            // the first 6 digits of the parish should match the district
-            if ($submission['church_district'] != substr($submission['church_parish'], 0, 6)) {
-                $l10n = $validationEvent->getLocalisation();
-                $validationEvent->addValidationError('church_parish', $l10n->localise("Diese Kirchengemeinde gehört nicht zum gewählten Kirchenkreis."));
+        // add contact default values
+        if ($resultsEvent->getParticipantID()) {
+            $participant = civicrm_api3('Participant', 'getsingle', ['id' => $resultsEvent->getParticipantID()]);
+            CRM_Events_CustomData::labelCustomFields($participant);
+            foreach (CRM_Events_PresbyterTag::PARTICIPANT_MAPPING as $form_field => $participant_field) {
+                $value = CRM_Utils_Array::value($participant_field, $participant, '');
+                $resultsEvent->setPrefillValue($form_field, $value);
             }
-        }
-    }
-
-
-    /**
-     * This function will tell you which entity/entities the given field
-     *   will relate to. It would mostly be Contact or Participant (or both)
-     *
-     * @param string $field_key
-     *   the field key as used by this profile
-     *
-     * @return array
-     *   list of entities
-     */
-    public function getFieldEntities($field_key)
-    {
-        if (in_array($field_key, ['age_range', 'sm_instagram', 'sm_twitter', 'sm_twitter'])) {
-            return ['Participant'];
-        } else {
-            return ['Contact'];
         }
     }
 }
