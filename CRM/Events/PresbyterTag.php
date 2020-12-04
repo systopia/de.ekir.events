@@ -148,7 +148,7 @@ class CRM_Events_PresbyterTag
     }
 
     /**
-     * PostProcessing after the registrx`ation was finished
+     * PostProcessing after the registration was finished
      *
      * @param $registration ChangingEvent
      *   registration event
