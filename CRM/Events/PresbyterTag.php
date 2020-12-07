@@ -135,12 +135,14 @@ class CRM_Events_PresbyterTag
         if (!$registration->hasErrors() && self::isPresbyterTag($registration->getEvent())) {
             // map registration fields to custom fields
             if ($registration instanceof UpdateEvent) {
+                $submitted_data = $registration->getSubmission();
                 $participant_data = &$registration->getParticipantUpdates();
             } else {
+                $submitted_data = $registration->getParticipantData();
                 $participant_data = &$registration->getParticipantData();
             }
             foreach (self::PARTICIPANT_MAPPING as $registration_key => $custom_field) {
-                $participant_data[$custom_field] = CRM_Utils_Array::value($registration_key, $participant_data, '');
+                $participant_data[$custom_field] = CRM_Utils_Array::value($registration_key, $submitted_data, '');
             }
 
             // todo: anything else special about the PresbyterTag registration should go in here
