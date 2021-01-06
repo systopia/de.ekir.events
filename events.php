@@ -43,6 +43,12 @@ function events_civicrm_config(&$config) {
     $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.update',
         ['CRM_Events_PresbyterTag', 'adjustParticipantParameters'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_PARTICIPANT_CHANGES);
+
+    // register for event/session info render events
+    $dispatcher->addUniqueListener(
+        'civi.remoteevent.render',
+        ['CRM_Events_PresbyterTag', 'modifyInformationRendering']);
+
 }
 
 /**

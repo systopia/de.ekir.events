@@ -161,4 +161,32 @@ class CRM_Events_PresbyterTag
             // todo: anything to be done after the registration was successful should go in here
         }
     }
+
+    /**
+     * Influence the rendering of event / session information
+     *
+     * @param $render_event \Civi\RenderEvent
+     *   information render event
+     */
+    public static function modifyInformationRendering($render_event)
+    {
+        $context = $render_event->getContext();
+        if ( $context == 'remoteevent.session.description.short'
+          || $context == 'remoteevent.session.description.long') {
+
+            // get event ID to check whether it's a presbyter tag
+            $session = $render_event->getVars()['session'];
+            $event = CRM_Remoteevent_RemoteEvent::getRemoteEvent($session['event_id']);
+            if (!self::isPresbyterTag($event)) {
+                return; // this is not a PresbyterTag
+            }
+
+            // now simply replace the default template with ours
+            if ($context == 'remoteevent.session.description.short') {
+                $render_event->setTemplateFile(E::path('resources/presbyter_session_short_description.tpl'));
+            } else if ($context == 'remoteevent.session.description.long') {
+                $render_event->setTemplateFile(E::path('resources/presbyter_session_description.tpl'));
+            }
+        }
+    }
 }
