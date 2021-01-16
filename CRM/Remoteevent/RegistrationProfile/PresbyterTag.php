@@ -122,6 +122,14 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'label'       => $l10n->localise('Kirchenkreis'),
                 'description' => $l10n->localise("Zu welchem Kirchenkreis gehören Sie?"),
                 'parent'      => 'ekir_data',
+                'dependencies'=> [
+                    'dependent_field'       => 'church_parish',
+                    'hide_unrestricted'     => 1,
+                    'hide_restricted_empty' => 1,
+                    'command'               => 'restrict',
+                    'regex_subject'         => 'dependent',
+                    'regex'                 => '^(<current_value>[0-9]+)$',
+                ],
             ],
             'church_parish' => [
                 'name'        => 'church_parish',
