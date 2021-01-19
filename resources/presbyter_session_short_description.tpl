@@ -11,4 +11,4 @@
 | copyright header is strictly prohibited without        |
 | written permission from the original author(s).        |
 +--------------------------------------------------------+
-*}[{$session.category}] {$session.type}: {$session.title}
+*}Kategorie: {$session.category}, Art: {$session.type}
