@@ -47,7 +47,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
             'contact_base' => [
                 'type'        => 'fieldset',
                 'name'        => 'contact_base',
-                'label'       => $l10n->localise("Stammdaten"),
+                'label'       => $l10n->localise("Persönliche Daten"),
                 'weight'      => 10,
                 'description' => '',
             ],
@@ -58,7 +58,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 40,
                 'required'    => 1,
                 'label'       => $l10n->localise('Vorname'),
-                'description' => $l10n->localise("Vorname des Teilnehmers"),
                 'parent'      => 'contact_base'
             ],
             'last_name'    => [
@@ -68,7 +67,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 50,
                 'required'    => 1,
                 'label'       => $l10n->localise('Nachname'),
-                'description' => $l10n->localise("Nachname des Teilnehmers"),
                 'parent'      => 'contact_base'
             ],
             'gender_id'    => [
@@ -79,7 +77,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'required'    => 1,
                 'options'     => $this->getOptions('gender', $locale),
                 'label'       => $l10n->localise('Geschlecht'),
-                'description' => $l10n->localise("Geschlecht des Teilnehmers"),
                 'parent'      => 'contact_base'
             ],
             'age_range'    => [
@@ -89,8 +86,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 70,
                 'required'    => 1,
                 'options'     => $this->getOptions('age_range', $locale),
-                'label'       => $l10n->localise('Altersgruppe'),
-                'description' => $l10n->localise("Alterskohorte des Teilnehmers"),
+                'label'       => $l10n->localise('Alterskohorte'),
                 'parent'      => 'contact_base'
             ],
             'email' => [
@@ -100,7 +96,6 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'weight'      => 90,
                 'required'    => 1,
                 'label'       => $l10n->localise('E-Mail'),
-                'description' => $l10n->localise("E-Mail Adresse"),
                 'parent'      => 'contact_base'
             ],
 
