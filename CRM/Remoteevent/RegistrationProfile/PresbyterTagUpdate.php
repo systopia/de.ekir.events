@@ -46,7 +46,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTagUpdate extends CRM_Remotee
             'contact_base' => [
                 'type'        => 'fieldset',
                 'name'        => 'contact_base',
-                'label'       => $l10n->localise("Stammdaten"),
+                'label'       => $l10n->localise("Persönliche Daten"),
                 'weight'      => 10,
                 'description' => '',
             ],
