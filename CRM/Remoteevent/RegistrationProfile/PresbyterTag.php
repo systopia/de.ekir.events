@@ -146,7 +146,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTag extends CRM_Remoteevent_R
                 'validation'  => 'Date',
                 'weight'      => 70,
                 'required'    => 1,
-                'label'       => $l10n->localise('Presbyter seit'),
+                'label'       => $l10n->localise('Im Presbyterium seit'),
                 'description' => $l10n->localise("Seit wann sind Sie im Presbyterium?"),
                 'parent'      => 'ekir_data',
             ],
