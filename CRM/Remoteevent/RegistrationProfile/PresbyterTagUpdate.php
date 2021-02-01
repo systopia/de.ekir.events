@@ -87,7 +87,7 @@ class CRM_Remoteevent_RegistrationProfile_PresbyterTagUpdate extends CRM_Remotee
                 'weight'      => 70,
                 'required'    => 1,
                 'label'       => $l10n->localise('Im Presbyterium seit'),
-                'description' => $l10n->localise("Seit wann sind Sie im Presbyterium?"),
+                'description' => $l10n->localise("Sollten Sie das genaue Datum nicht mehr wissen, dann reicht auch eine ungefähre Angabe."),
                 'parent'      => 'ekir_data',
             ],
 
