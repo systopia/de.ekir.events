@@ -125,6 +125,24 @@ class CRM_Events_PresbyterTag
     }
 
     /**
+     * Temporary workaround for an issue, where no participant mails are sent
+     *  for updates with default profiles - i.e. without changes to the participant
+     *
+     * @param $registration ChangingEvent
+     *   registration event
+     *
+     * @see https://github.com/systopia/de.systopia.remoteevent/issues/7
+     */
+    public static function ticket_14555_workaround($registration)
+    {
+        if (!$registration->hasErrors()) {
+            // make sure there is an 'update' to be executed
+            $participant_data = &$registration->getParticipantUpdates();
+            $participant_data['force_trigger_eventmessage'] = 1;
+        }
+    }
+
+    /**
      * Allows us to tweak the data for the participant just before it's being created
      *
      * @param $registration ChangingEvent

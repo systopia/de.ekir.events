@@ -42,6 +42,9 @@ function events_civicrm_config(&$config) {
         ['CRM_Events_PresbyterTag', 'mapRegistrationFieldsToContactFields'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_CONTACT_CHANGES);
     $dispatcher->addUniqueListener(
         'civi.remoteevent.registration.update',
+        ['CRM_Events_PresbyterTag', 'ticket_14555_workaround'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_PARTICIPANT_CHANGES);
+    $dispatcher->addUniqueListener(
+        'civi.remoteevent.registration.update',
         ['CRM_Events_PresbyterTag', 'adjustParticipantParameters'], CRM_Remoteevent_RegistrationUpdate::BEFORE_APPLY_PARTICIPANT_CHANGES);
 
     // register for event/session info render events
