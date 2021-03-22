@@ -177,9 +177,9 @@ class CRM_Events_PresbyterTag
             // get event ID to check whether it's a presbyter tag
             $session = $render_event->getVars()['session'];
             $event = CRM_Remoteevent_RemoteEvent::getRemoteEvent($session['event_id']);
-            if (!self::isPresbyterTag($event)) {
-                return; // this is not a PresbyterTag
-            }
+//            if (!self::isPresbyterTag($event)) {
+//                return; // this is not a PresbyterTag
+//            }
 
             // now simply replace the default template with ours
             if ($context == 'remoteevent.session.description.short') {
